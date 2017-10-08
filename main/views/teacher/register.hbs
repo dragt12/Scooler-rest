@@ -1,0 +1,10 @@
+{{#if hasErrors}}
+    <div>{{messages}}</div>
+{{/if}}
+<form action='/teacher/register' method="POST">
+    <input type='text' name='email' />
+    <input type='password' name='password' />
+    <input type='text' name='school_id' />
+    <input type='password' name='school_pass' />
+    <input type='submit'>
+</form>
