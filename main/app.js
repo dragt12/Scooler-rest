@@ -13,7 +13,8 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
-mongoose.connect('localhost:27017/hack-heroes');
+//mongoose.connect('localhost:27017/hack-heroes');
+mongoose.connect('mongodb://unitycss:grubyfrontend@ds040837.mlab.com:40837/unityddl-database')
 mongoose.set('debug', true);
 require('./config/passport');
 // view engine setup
