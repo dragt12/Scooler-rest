@@ -14,6 +14,9 @@ router.get('/teacher/register', function(req,res,next){
   console.log(messages);
   res.render('teacher/register', {messages:messages, hasErrors: messages.length>0});
 });
+router.post('/teacher/login', passport.authenticate('local.signin'), function(req,res,next){
+  res.json({'id': req.user.id, 'email':req.user.email});
+});
 router.post('/teacher/generate_codes', function(req,res,next){
   var students=req.body.students;
   console.log(students);
@@ -25,6 +28,7 @@ router.post('/teacher/generate_codes', function(req,res,next){
     key.name=element;
     key.key_code=keyCode;
     key.key_pass=keyPass;
+    key.teacher=req.body.id;
     key.save();
     returnArray.push({'name': element, 'login_code':keyCode, 'login_pass':keyPass});
   }, this);
@@ -39,13 +43,13 @@ router.post('/teacher/register', passport.authenticate('local.signup'),function(
             if(!err){
               req.logout();
               req.flash('error', 'Bad school key/school pass');
-              res.redirect('/teacher/register'); 
+              res.status(401);
             }
           }); 
         } else {
           result.teachers.push({'email':req.user.email, 'id':req.user.id});
           result.save(function(err,result){
-            res.redirect('/');
+            res.status(200).send({'id': req.user.id, 'email': req.user.email});
           })
         }
     });
@@ -68,11 +72,11 @@ router.get('/school/generate/:szkola', function(req,res,next){
           if(err){
             console.log('error');
           } else {
-            res.render('index');
+            res.json({'school_code':school_code, 'school_pass':school_pass});
           }
         });
     } else {
-      res.render('index');
+      res.status(500);
     }
   })
   
