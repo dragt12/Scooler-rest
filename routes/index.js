@@ -145,10 +145,10 @@ router.post('/admin/login', function(req,res,next){
 router.post('/class/changeStudents',function(req,res,next){
   Class.findOne({'class_name':req.body.class_name, 'school':req.body.key_code}, function(err,result){
     if(result){
-      console.log(result[0].class_name);
-      result[0].students=req.body.students;
+      console.log(result.class_name);
+      result.students=req.body.students;
       console.log(result);
-      //result.save().then(function(err,result){res.status(200).send();});
+      result.save().then(function(err,result){res.status(200).send();});
     }
   })
 })
