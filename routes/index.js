@@ -80,7 +80,7 @@ router.get('/school/generate/:szkola/:teachers', function(req,res,next){
         teacher_code.key_pass=keyPass;
         teacher_code.key_type='teacher';
         teacher_code.save();
-        returnArray.push({'teacher_name': element.name, 'key_code':keyCode, 'key_pass': keyPass});
+        returnArray.push({'teacher_name': element, 'key_code':keyCode, 'key_pass': keyPass});
         new_school.teachers.push({'name':element});
       }, this);
       new_school.save(function(err,result){
