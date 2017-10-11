@@ -1,0 +1,8 @@
+{{#if hasErrors}}
+    <div>{{messages}}</div>
+{{/if}}
+<form action='/all/check_code' method="POST">
+    <input type='text' name='key_code'>
+    <input type='password' name='key_pass'>
+    <input type='submit'>
+</form>

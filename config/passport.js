@@ -1,5 +1,5 @@
 var passport=require('passport');
-var User=require('../models/user');
+var User=require('../models/teacher');
 var School=require('../models/school');
 var LocalStrategy=require('passport-local').Strategy;
 
@@ -15,16 +15,6 @@ passport.use('local.signup', new LocalStrategy({
 	usernameField: 'email',
 	passwordField: 'password'
 }, function(email,password,done){
-	/*req.checkBody('email', "Invalid email").notEmpty().isEmail();
-	req.checkBody('email', "Invalid email").notEmpty().isLength({min:4});
-	var errors=req.validationErrors();
-	if(errors){
-		var messages=[];
-		errors.forEach(function(error){
-			messages.push(error.msg);
-		});
-		return done(null,false,req.flash('error', messages));
-	}*/
 	User.findOne({'email':email},function(err,user)
 	{
 		if(err){
@@ -49,16 +39,6 @@ passport.use('local.signin', new LocalStrategy({
 	passwordField: 'password'
 
 }, function(email,password,done){
-	/*req.checkBody('email', "Invalid email").notEmpty().isEmail();
-	req.checkBody('email', "Invalid email").notEmpty();
-	var errors=req.validationErrors();
-	if(errors){
-		var messages=[];
-		errors.forEach(function(error){
-			messages.push(error.msg);
-		});
-		return done(null,false,req.flash('error', messages));
-	}*/
 	User.findOne({'email':email},function(err,user)
 	{
 		if(err){
@@ -74,3 +54,26 @@ passport.use('local.signin', new LocalStrategy({
 		return done(null, user);
 	});
 }));
+/*passport.use('local.user_signin', new LocalStrategy(){
+    usernameField: 'email',
+	passwordField: 'password'
+}, function(email,password,done){
+	User.findOne({'email':email},function(err,user)
+	{
+		if(err){
+			return done(err);
+		}
+		if(user){
+			return done(null,false,{message:'Email is already in use'});
+		}
+		var newUser=new User();
+		newUser.email=email;
+		newUser.password= newUser.encryptPassword(password);
+		newUser.save(function(err,result){
+			if(err){
+				return done(err);
+			}
+			return done(null, newUser);
+		});
+	});
+});*/

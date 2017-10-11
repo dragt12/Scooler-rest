@@ -3,7 +3,10 @@ var Schema=mongoose.Schema;
 var bcrypt=require('bcrypt-nodejs');
 var userschema=new Schema({
 	email:{type:String, required:true},
-	password:{type:String, required:true}
+    password:{type:String, required:true},
+    name:{type:String, required:false},
+    school:{type:String, required:false},
+    classes:{type:Array, default:[]}
 });
 userschema.methods.encryptPassword = function(password)
 {
