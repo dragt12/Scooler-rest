@@ -153,7 +153,8 @@ router.post('/class/changeStudents',function(req,res,next){
   })
 })
 router.get('/getClass/:className/:schoolId', function(req,res,next){
-  Class.find({'class_name':req.params.class_name, 'school':req.params.school_id}, function(err,result){
+  Class.find({'class_name':req.params.className, 'school':req.params.schoolId}, function(err,result){
+    console.log(result);
     res.json(result);
   });
 })
