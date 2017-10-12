@@ -10,8 +10,10 @@ var session=require('express-session');
 var flash=require('connect-flash');
 var randomstring=require('randomstring');
 var index = require('./routes/index');
-var users = require('./routes/users');
-
+var school = require('./routes/school');
+var register=require('./routes/register');
+var login=require('./routes/login');
+var classes=require('./routes/class');
 var app = express();
 //mongoose.connect('localhost:27017/hack-heroes');
 mongoose.connect('mongodb://gruby:gruby@ds040837.mlab.com:40837/unitycss')
@@ -38,8 +40,10 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/', index);
-app.use('/users', users);
-
+app.use('/school', school);
+app.use('/register', register);
+app.use('/login', login);
+app.use('/class', classes);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
