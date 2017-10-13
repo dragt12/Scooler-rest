@@ -13,12 +13,9 @@ router.post('/admin', function(req,res,next){
     School.findOne({school_key:req.body.key_code, school_pass: req.body.key_pass}, function(err,result){
       console.log(result);
       if(result){
-        Class.find({'school':req.body.key_code}, function(err, result){
-          User.find({school : req.body.key_code}, function(err,teachers){
-            res.status(200).json({'classes':result, 'school_id':req.body.key_code, 'teacher':teachers});
-          })
-        })
-
+        res.status(200).json({'school_id':req.body.key_code});
+      } else {
+        res.status(600).send();
       }
     });
 });

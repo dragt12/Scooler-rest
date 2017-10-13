@@ -2,8 +2,20 @@ var express = require('express');
 var router = express.Router();
 var School=require('../models/school');
 var userCodes=require('../models/user_codes');
+var Class=require('../models/class');
+var User=require('../models/teacher');
 var randomstring=require('randomstring');
 /* GET users listing. */
+router.get('/classes/:schoolId', function(req,res,next){
+    Class.find({school:req.params.schoolId}, function(err,result){
+        res.json({"classes":result});
+    })
+})
+router.get('/teachers/:schoolId', function(req,res,next){
+    User.find({school:req.params.schoolId}, function(err,result){
+        res.json({"teachers":result});
+    })
+})
 router.get('/', function(req, res, next) {
   res.status(200).send();
 });
@@ -45,5 +57,23 @@ router.get('/teacher_generate/:school_key/:teachers', function(req,res,next){
       res.status(500);
     }
   })
+});
+router.post('/student_generate', function(req,res,next){
+  var students=req.body.students;
+  console.log(students);
+  var returnArray=[];
+  students.forEach(function(element) {
+    var keyCode=randomstring.generate(15);
+    var keyPass=randomstring.generate(10);
+    var key=new userCodes();
+    key.name=element;
+    key.key_code=keyCode;
+    key.key_pass=keyPass;
+    key.key_type='student';
+    key.school=req.body.key_code;
+    key.save();
+    returnArray.push({'name': element, 'login_code':keyCode, 'login_pass':keyPass});
+  }, this);
+  res.json(returnArray);
 });
 module.exports = router;

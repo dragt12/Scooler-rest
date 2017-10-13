@@ -35,9 +35,13 @@ router.get('/setTeacher/:id/:className', function(req,res,next){
 })
 router.get('/removeTeacher/:id/:className', function(req,res,next){
   User.findById(req.params.id, function(err,result){
-    var index = result.classes.indexOf(req.params.class_name);
-    result.classes.splice(index,1);
-    result.save(function(err,result){res.status(200).send();});
+    if(result){
+        var index = result.classes.indexOf(req.params.class_name);
+        result.classes.splice(index,1);
+        result.save(function(err,result){res.status(200).send();});
+    } else {
+        res.status(600).send();
+    }
   });
 })
 router.get('/remove/:id/:className/:schoolId', function(req,res,next){
@@ -47,6 +51,8 @@ router.get('/remove/:id/:className/:schoolId', function(req,res,next){
       if(index!=-1){
         result.classes.splice(index,1);
         result.save(function(err,result){res.status(200).send();});
+      } else {
+          res.status(600).send();
       }
     })
   });
@@ -59,6 +65,8 @@ router.post('/changeStudents',function(req,res,next){
       result.students=req.body.students;
       console.log(result);
       result.save().then(function(err,result){res.status(200).send();});
+    } else {
+        res.status(600).send();
     }
   })
 })

@@ -1,6 +1,7 @@
 var passport=require('passport');
 var User=require('../models/teacher');
 var School=require('../models/school');
+var Student=require('../models/student')
 var LocalStrategy=require('passport-local').Strategy;
 
 passport.serializeUser(function(user, done){
@@ -54,11 +55,11 @@ passport.use('local.signin', new LocalStrategy({
 		return done(null, user);
 	});
 }));
-/*passport.use('local.user_signin', new LocalStrategy(){
-    usernameField: 'email',
+passport.use('student.signup', new LocalStrategy({
+	usernameField: 'email',
 	passwordField: 'password'
 }, function(email,password,done){
-	User.findOne({'email':email},function(err,user)
+	Student.findOne({'email':email},function(err,user)
 	{
 		if(err){
 			return done(err);
@@ -66,7 +67,7 @@ passport.use('local.signin', new LocalStrategy({
 		if(user){
 			return done(null,false,{message:'Email is already in use'});
 		}
-		var newUser=new User();
+		var newUser=new Student();
 		newUser.email=email;
 		newUser.password= newUser.encryptPassword(password);
 		newUser.save(function(err,result){
@@ -76,4 +77,4 @@ passport.use('local.signin', new LocalStrategy({
 			return done(null, newUser);
 		});
 	});
-});*/
+}));

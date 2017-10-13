@@ -3,6 +3,7 @@ var passport=require('passport');
 var router = express.Router();
 var School=require('../models/school');
 var User=require('../models/teacher');
+var Student=require('../models/student');
 var userCodes=require('../models/user_codes');
 router.post('/teacher', passport.authenticate('local.signup'),function(req,res,next){
     userCodes.findOne({'key_code':req.body.school_id, 'key_pass': req.body.school_pass, 'key_type':'teacher'}, function(err,result){
@@ -41,4 +42,24 @@ router.get('/teacher/register', function(req,res,next){
   console.log(messages);
   res.render('teacher/register', {messages:messages, hasErrors: messages.length>0});
 });
+router.post('/student', passport.authenticate('student.signup'), function(req,res,next){
+  userCodes.findOne({'key_code':req.body.school_id, 'key_pass': req.body.school_pass, 'key_type':'student'}, function(err,result){
+      if(!result){
+          Student.remove({'_id':req.user.id}, function(err,remove){
+            if(!err){
+              req.logout();
+              res.status(401);
+            }
+          });
+      }  else {
+          Student.findById(req.user.id, function(err,student){
+              student.name=result.name;
+              student.school=result.school;
+              student.save(function(err,result){
+                  res.json({result});
+              })
+          })
+      }
+  });
+})
 module.exports = router;
