@@ -12,7 +12,7 @@ router.get('/show/:teacherId', function(req,res,next){
       res.json({'classes':result.classes});
     }
   })
-})
+});
 router.get('/create/:className/:schoolId', function(req,res,next){
   var new_class=new Class();
   new_class.class_name=req.params.className;
@@ -45,18 +45,20 @@ router.get('/removeTeacher/:id/:className', function(req,res,next){
   });
 })
 router.get('/remove/:id/:className/:schoolId', function(req,res,next){
-  User.findById(req.params.id, function(err,result){  
-    Class.remove({'class_name':req.params.className, 'school':req.params.schoolId}, function(err,removed){
-      var index = result.classes.indexOf(req.params.class_name);
-      if(index!=-1){
-        result.classes.splice(index,1);
-        result.save(function(err,result){res.status(200).send();});
-      } else {
-          res.status(600).send();
-      }
+    var teachersId = JSON.parse(req.params.id);
+    Class.remove({'class_name':req.params.className, 'school':req.params.schoolId}, function(err,removed){});
+    teachersId.forEach(function(element) {
+        User.findById(element, function(err,result){  
+            var index = result.classes.indexOf(req.params.class_name);
+            if(index!=-1){
+                result.classes.splice(index,1);
+                result.save(function(err,result){});
+            } else {}
     })
+    }, this);
+    res.status(200).send();
   });
-});
+
 
 router.post('/changeStudents',function(req,res,next){
   Class.findOne({'class_name':req.body.class_name, 'school':req.body.key_code}, function(err,result){
