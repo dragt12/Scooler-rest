@@ -32,6 +32,11 @@ router.get('/school_generate/:school', function(req,res,next){
     }
   })
 });
+router.get('/teacher/unregistered/:schoolId',function(req,res,next){
+  userCodes.find({school:req.params.schoolId}, function(err,result){
+    res.json(result);
+  })
+})
 router.get('/teacher_generate/:school_key/:teachers', function(req,res,next){
   var school=req.params.school_key;
   var teachers = JSON.parse(req.params.teachers);
