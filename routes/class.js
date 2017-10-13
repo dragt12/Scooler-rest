@@ -48,7 +48,7 @@ router.get('/remove/:id/:className/:schoolId', function(req,res,next){
     var teachersId = JSON.parse(req.params.id);
     Class.remove({'class_name':req.params.className, 'school':req.params.schoolId}, function(err,removed){});
     teachersId.forEach(function(element) {
-        User.findById(element, function(err,result){  
+        User.find({name:element}, function(err,result){  
             var index = result.classes.indexOf(req.params.class_name);
             if(index!=-1){
                 result.classes.splice(index,1);
