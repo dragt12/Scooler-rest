@@ -38,9 +38,7 @@ router.get('/teacher/unregistered/:schoolId',function(req,res,next){
   })
 });
 router.get('/teacher/unregister/:name/:schoolId', function(req,res,next){
-  var name=req.params.name;
-  var schoolId=req.params.schoolId;
-  userCodes.remove({name: name, school:schoolId}, function(err,result){
+  userCodes.remove({name: req.params.name, school:req.params.schoolId}, function(err){
     if(!err){
       res.status(200).send();
     }
