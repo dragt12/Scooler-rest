@@ -78,4 +78,9 @@ router.get('/get/:className/:schoolId', function(req,res,next){
     res.json(result);
   });
 })
+router.get('/getAppended/:teacherName/:schoolId', function(req,res,next){
+    User.find({'name':req.params.teacherName, 'school':req.params.schoolId}, function(err,result){
+        res.json({'classes':result.classes});
+    })
+})
 module.exports=router;
