@@ -36,6 +36,15 @@ router.get('/teacher/unregistered/:schoolId',function(req,res,next){
   userCodes.find({school:req.params.schoolId,key_type:'teacher'}, function(err,result){
     res.json(result);
   })
+});
+router.get('/teacher/unregister/:name/:schoolId', function(req,res,next){
+  var name=req.params.name;
+  var schoolId=req.params.schoolId;
+  userCodes.remove({name: name, school:schoolId}, function(err,result){
+    if(!err){
+      res.status(200).send();
+    }
+  })
 })
 router.get('/teacher_generate/:school_key/:teachers', function(req,res,next){
   var school=req.params.school_key;
