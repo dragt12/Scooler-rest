@@ -38,10 +38,8 @@ router.get('/teacher/unregistered/:schoolId',function(req,res,next){
   })
 });
 router.get('/teacher/unregister/:name/:schoolId', function(req,res,next){
-  userCodes.remove({name: req.params.name, school:req.params.schoolId}, function(err){
-    if(!err){
+  userCodes.remove({name: req.params.name, key_type:'teacher',school:req.params.schoolId}, function(err){
       res.status(200).send();
-    }
   })
 })
 router.get('/teacher_generate/:school_key/:teachers', function(req,res,next){
