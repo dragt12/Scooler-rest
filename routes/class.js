@@ -6,8 +6,8 @@ var User=require('../models/teacher');
 var Class=require('../models/class');
 var userCodes=require('../models/user_codes');
 var randomstring=require('randomstring');
-router.get('/show/:teacherId', function(req,res,next){
-  User.findById(req.params.teacherId, function(err,result){
+router.get('/show/:name/:schoolId', function(req,res,next){
+  User.findById({name:req.params.name, school:req.params.schoolId}, function(err,result){
     if(result){
       res.json({'classes':result.classes});
     }
