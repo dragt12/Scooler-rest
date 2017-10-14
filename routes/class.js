@@ -7,7 +7,7 @@ var Class=require('../models/class');
 var userCodes=require('../models/user_codes');
 var randomstring=require('randomstring');
 router.get('/show/:name/:schoolId', function(req,res,next){
-  User.find({name:req.params.name, school:req.params.schoolId}, function(err,result){
+  User.findOne({name:req.params.name, school:req.params.schoolId}, function(err,result){
     if(result){
       res.json({'classes':result.classes});
     }
@@ -28,13 +28,13 @@ router.get('/create/:className/:schoolId', function(req,res,next){
   
 })
 router.get('/setTeacher/:name/:schoolId/:className', function(req,res,next){
-  User.find({name:req.params.name, school:req.params.schoolId}, function(err,result){
+  User.findOne({name:req.params.name, school:req.params.schoolId}, function(err,result){
     result.classes.push(req.params.className);
     result.save(function(err,result){res.status(200).send();})
   })
 })
 router.get('/removeTeacher/:name/:schoolId/:className', function(req,res,next){
-  User.find({name:req.params.name, school:req.params.schoolId}, function(err,result){
+  User.findOne({name:req.params.name, school:req.params.schoolId}, function(err,result){
     if(result){
         var index = result.classes.indexOf(req.params.class_name);
         result.classes.splice(index,1);
