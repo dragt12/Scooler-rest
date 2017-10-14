@@ -36,7 +36,7 @@ router.get('/setTeacher/:name/:schoolId/:className', function(req,res,next){
 router.get('/removeTeacher/:name/:schoolId/:className', function(req,res,next){
   User.findOne({name:req.params.name, school:req.params.schoolId}, function(err,result){
     if(result){
-        var index = result.classes.indexOf(req.params.class_name);
+        var index = result.classes.indexOf(req.params.className);
         result.classes.splice(index,1);
         result.save(function(err,result){res.status(200).send();});
     } else {
