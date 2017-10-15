@@ -66,7 +66,7 @@ router.post('/changeStudents',function(req,res,next){
       console.log(result.class_name);
       result.students=req.body.students;
       console.log(result);
-      result.save().then(function(err,result){res.status(200).send();});
+      result.save(function(err,result){res.status(200).send();});
     } else {
         res.status(600).send();
     }
@@ -74,6 +74,7 @@ router.post('/changeStudents',function(req,res,next){
 })
 router.get('/get/:className/:schoolId', function(req,res,next){
   Class.findOne({'class_name':req.params.className, 'school':req.params.schoolId}, function(err,result){
+    //Students.find({'class':req.params.className, 'school':})
     console.log(result);
     res.json(result);
   });

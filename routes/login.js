@@ -7,7 +7,9 @@ var Class=require('../models/class');
 var userCodes=require('../models/user_codes');
 var randomstring=require('randomstring');
 router.post('/teacher', passport.authenticate('local.signin'), function(req,res,next){
-  res.json({'id': req.user.id, 'email':req.user.email});
+    User.findById(req.user.id, function(err,result){
+        res.json({'name':req.user.email, 'school':result.school});
+    });  
 });
 router.post('/admin', function(req,res,next){
     School.findOne({school_key:req.body.key_code, school_pass: req.body.key_pass}, function(err,result){

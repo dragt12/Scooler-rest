@@ -5,7 +5,21 @@ var School=require('../models/school');
 var User=require('../models/teacher');
 var Class=require('../models/class');
 var userCodes=require('../models/user_codes');
+var Students=require('../models/student');
 var randomstring=require('randomstring');
-router.get('/addPoints/:id', function(req,res,next){
-    
+router.get('/addPoints/:name/:schoolId', function(req,res,next){
+    Students.find({name:req.params.name,school:req.params.schoolId}, function(err,result){
+        result.points=result.points + 1;
+        result.save(function(err,result){
+            res.status(200).send();
+        })
+    });
+});
+router.get('/minusPoints/:name/:schoolId', function(req,res,next){
+    Students.find({name:req.params.name,school:req.params.schoolId}, function(err,result){
+        result.points=result.points - 1;
+        result.save(function(err,result){
+            res.status(200).send();
+        })
+    });
 })
