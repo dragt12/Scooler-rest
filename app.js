@@ -9,12 +9,14 @@ var passport=require('passport');
 var session=require('express-session');
 var flash=require('connect-flash');
 var randomstring=require('randomstring');
+var scheduler=require('node-schedule');
 var index = require('./routes/index');
 var school = require('./routes/school');
 var register=require('./routes/register');
 var login=require('./routes/login');
 var classes=require('./routes/class');
-//var student=require('./routes/students');
+var game=require('./routes/game');
+var student=require('./routes/students');
 var app = express();
 //mongoose.connect('localhost:27017/hack-heroes');
 mongoose.connect('mongodb://gruby:gruby@ds040837.mlab.com:40837/unitycss')
@@ -45,6 +47,7 @@ app.use('/school', school);
 app.use('/register', register);
 app.use('/login', login);
 app.use('/class', classes);
+app.use('/game', game);
 //app.use('/student', student);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

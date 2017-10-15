@@ -16,12 +16,13 @@
     "hbs": "~4.0.1",
     "mongoose": "^4.12.0",
     "morgan": "~1.9.0",
+    "node-schedule": "^1.2.5",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "randomstring": "^1.1.5",
     "serve-favicon": "~2.4.5"
   },
-  "engines":{
+  "engines": {
     "node": "6.10.0"
   }
 }

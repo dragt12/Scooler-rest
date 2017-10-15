@@ -7,7 +7,14 @@ var student=new schema({
     password:{type:String, required:true},
     school:{type:String, required:false},
     class:{type:String, required:false},
-    points:{type:Number, required:false, default:0}
+    points:{type:Number, required:false, default:10},
+    buildings:{
+        director:{type:Number, default:1},
+        cantine:{type:Number, default:1},
+        teachers_room:{type:Number, default:1},
+        class:{type:Number, default:1}
+    },
+    trophy:{type:Number, default:0}
 });
 student.methods.encryptPassword = function(password)
 {
