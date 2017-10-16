@@ -30,7 +30,9 @@ router.get('/create/:className/:schoolId', function(req,res,next){
 router.get('/setTeacher/:name/:schoolId/:className', function(req,res,next){
   User.findOne({name:req.params.name, school:req.params.schoolId}, function(err,result){
     result.classes.push(req.params.className);
-    result.save(function(err,result){res.status(200).send();})
+    result.save(function(err){
+        res.status(200).send();
+    })
   })
 })
 router.get('/removeTeacher/:name/:schoolId/:className', function(req,res,next){
@@ -38,7 +40,9 @@ router.get('/removeTeacher/:name/:schoolId/:className', function(req,res,next){
     if(result){
         var index = result.classes.indexOf(req.params.className);
         result.classes.splice(index,1);
-        result.save(function(err,result){res.status(200).send();});
+        result.save(function(err){
+            res.status(200).send();
+        });
     } else {
         res.status(600).send();
     }
@@ -66,7 +70,9 @@ router.post('/changeStudents',function(req,res,next){
       console.log(result.class_name);
       result.students=req.body.students;
       console.log(result);
-      result.save(function(err,result){res.status(200).send();});
+      result.save(function(err){
+          res.status(200).send();
+    });
     } else {
         res.status(600).send();
     }

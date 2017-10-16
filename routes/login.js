@@ -5,6 +5,7 @@ var School=require('../models/school');
 var User=require('../models/teacher');
 var Class=require('../models/class');
 var userCodes=require('../models/user_codes');
+var Student=require('../models/student');
 var randomstring=require('randomstring');
 router.post('/teacher', passport.authenticate('local.signin'), function(req,res,next){
     User.findById(req.user.id, function(err,result){
@@ -21,4 +22,13 @@ router.post('/admin', function(req,res,next){
       }
     });
 });
+router.post('/student', passport.authenticate('student.signin'), function(req,res,next){
+    Student.findById(req.user.id, function(err, result){
+        if(result){
+            res.status(200).json({'id':req.user.id, 'name':result.name})
+        } else {
+            res.status(600).send();
+        }
+    })
+})
 module.exports=router;

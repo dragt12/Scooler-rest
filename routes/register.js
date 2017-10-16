@@ -13,7 +13,7 @@ router.post('/teacher', passport.authenticate('local.signup'),function(req,res,n
           User.remove({'_id':req.user.id}, function(err,remove){
             if(!err){
               req.logout();
-              res.status(401);
+              res.status(401).send();
             }
           }); 
         } else {
@@ -43,12 +43,12 @@ router.get('/teacher/register', function(req,res,next){
   res.render('teacher/register', {messages:messages, hasErrors: messages.length>0});
 });
 router.post('/student', passport.authenticate('student.signup'), function(req,res,next){
-  userCodes.findOne({'key_code':req.body.school_id, 'key_pass': req.body.school_pass, 'key_type':'student'}, function(err,result){
+  userCodes.findOne({'key_code':req.body.key_code, 'key_pass': req.body.key_pass, 'key_type':'student'}, function(err,result){
       if(!result){
           Student.remove({'_id':req.user.id}, function(err,remove){
             if(!err){
               req.logout();
-              res.status(401);
+              res.status(401).send();
             }
           });
       }  else {
