@@ -31,8 +31,8 @@ router.get('/setTeacher/:name/:schoolId/:className', function(req,res,next){
   User.findOne({name:req.params.name, school:req.params.schoolId}, function(err,result){
     result.classes.push(req.params.className);
     result.save(function(err){
-        res.status(200).send();
-    })
+          res.status(200).send();
+    });
   })
 })
 router.get('/removeTeacher/:name/:schoolId/:className', function(req,res,next){
@@ -41,7 +41,7 @@ router.get('/removeTeacher/:name/:schoolId/:className', function(req,res,next){
         var index = result.classes.indexOf(req.params.className);
         result.classes.splice(index,1);
         result.save(function(err){
-            res.status(200).send();
+          res.status(200).send();
         });
     } else {
         res.status(600).send();
