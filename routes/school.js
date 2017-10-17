@@ -42,6 +42,11 @@ router.get('/teacher/unregister/:name/:schoolId', function(req,res,next){
       res.status(200).send();
   })
 })
+router.get('/codes/:schoolId', function(req,res,next){
+  userCodes.find({school:req.params.schoolId}, function(err,result){
+    res.status(200).send(result);
+  })
+})
 router.get('/teacher_generate/:school_key/:teachers', function(req,res,next){
   var school=req.params.school_key;
   var teachers = JSON.parse(req.params.teachers);
