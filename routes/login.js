@@ -25,7 +25,7 @@ router.post('/admin', function(req,res,next){
 router.post('/student', passport.authenticate('student.signin'), function(req,res,next){
     Student.findById(req.user.id, function(err, result){
         if(result){
-            res.status(200).json({'id':req.user.id, 'name':result.name})
+            res.status(200).send(result)
         } else {
             res.status(600).send();
         }
