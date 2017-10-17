@@ -68,22 +68,4 @@ router.get('/teacher_generate/:school_key/:teachers', function(req,res,next){
     }
   })
 });
-router.post('/student_generate', function(req,res,next){
-  var students=req.body.students;
-  console.log(students);
-  var returnArray=[];
-  students.forEach(function(element) {
-    var keyCode=randomstring.generate(15);
-    var keyPass=randomstring.generate(10);
-    var key=new userCodes();
-    key.name=element;
-    key.key_code=keyCode;
-    key.key_pass=keyPass;
-    key.key_type='student';
-    key.school=req.body.key_code;
-    key.save();
-    returnArray.push({'name': element, 'login_code':keyCode, 'login_pass':keyPass});
-  }, this);
-  res.json(returnArray);
-});
 module.exports = router;

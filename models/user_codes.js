@@ -6,6 +6,7 @@ var user_key=new schema({
     key_pass:{type:String, required:true},
     key_type:{type:String, required:true},
     teacher:{type:String, required:false},
-    school:{type:String, required:false}
+    school:{type:String, required:false},
+    class:{type:String, required:false}
 });
 module.exports=mongoose.model('userCode', user_key);

@@ -15,13 +15,15 @@ scheduler.scheduleJob('0 * * * * *', function(){
             var happiness=0;
             if(element.buildings['class']<=element.buildings['cantine']){
                 happiness=1;
+            } else if(element.buildings['class']<=element.buildings['cantine']+2){
+                happiness=0.5;
             }
             var teachers=0;
             if(element.buildings['class']<=element.buildings['teachers']){
                 teachers=1;
             }
             var trophys=students*10/100;
-            trophys+=trophys*happiness*10/100;
+            trophys+=trophys*happiness*20/100;
             trophys+=trophys*teachers*10/100;
             
             element.trophy+=trophys;
@@ -41,7 +43,7 @@ router.get('/upgrade/:buildingName/:id', function(req,res,next){
         } else {
             Object.keys(result.buildings).forEach(function(element){
                 if(element==req.params.buildingName){
-                    var neededPoints=0;//result.buildings[element]*10+20;
+                    var neededPoints=0;//   result.buildings[element]*10+20;
                     console.log(neededPoints);
                     if(result.points>neededPoints && result.buildings[element]+1<=result.buildings['director']){
                         result.buildings[element]++;

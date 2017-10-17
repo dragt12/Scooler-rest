@@ -48,7 +48,7 @@ app.use('/register', register);
 app.use('/login', login);
 app.use('/class', classes);
 app.use('/game', game);
-//app.use('/student', student);
+app.use('/student', student);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

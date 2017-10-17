@@ -53,13 +53,14 @@ router.post('/student', passport.authenticate('student.signup'), function(req,re
           });
       }  else {
           Student.findById(req.user.id, function(err,student){
-              userCodes.remove({'key_code':req.body.school_id, 'key_pass': req.body.school_pass, 'key_type':'student'},function(err){
+              userCodes.remove({'key_code':req.body.key_code, 'key_pass': req.body.key_pass, 'key_type':'student'},function(err){
                   if(!err){
                       School.find({key_code:result.school}, function(err,found){
                           //found.students.append()
                       })
                         student.name=result.name;
                         student.school=result.school;
+                        student.class=result.class;
                         student.save(function(err,result){
                             res.json({result});
                         })
