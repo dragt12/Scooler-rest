@@ -24,8 +24,9 @@ router.get('/minusPoints/:name/:schoolId', function(req,res,next){
     });
 });
 router.get('/points/:class/:schoolId', function(req,res,next){
-    Students.find({'class':req.params.class, 'school':req.params.schoolId}, "points", function(err,result){
+    Students.find({'class':req.params.class, 'school':req.params.schoolId}, "name points", function(err,result){
         res.status(200).send(result);
-    })
+    });
+
 })
 module.exports=router;
