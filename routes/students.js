@@ -8,7 +8,7 @@ var userCodes=require('../models/user_codes');
 var Students=require('../models/student');
 var randomstring=require('randomstring');
 router.get('/addPoints/:name/:schoolId', function(req,res,next){
-    Students.find({name:req.params.name,school:req.params.schoolId}, function(err,result){
+    Students.findOne({name:req.params.name,school:req.params.schoolId}, function(err,result){
         result.points=result.points + 1;
         result.save(function(err,result){
             res.status(200).send();
@@ -16,7 +16,7 @@ router.get('/addPoints/:name/:schoolId', function(req,res,next){
     });
 });
 router.get('/minusPoints/:name/:schoolId', function(req,res,next){
-    Students.find({name:req.params.name,school:req.params.schoolId}, function(err,result){
+    Students.findOne({name:req.params.name,school:req.params.schoolId}, function(err,result){
         result.points=result.points - 1;
         result.save(function(err,result){
             res.status(200).send();
