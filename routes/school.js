@@ -43,7 +43,7 @@ router.get('/teacher/unregister/:name/:schoolId', function(req,res,next){
   })
 })
 router.get('/codes/:schoolId', function(req,res,next){
-  userCodes.find({school:req.params.schoolId}, function(err,result){
+  userCodes.find({school:req.params.schoolId,}, function(err,result){
     res.status(200).send(result);
   })
 })

@@ -28,4 +28,10 @@ router.get('/points/:class/:schoolId', function(req,res,next){
         res.status(200).send(result);
     });
 })
+router.get('/best/points/:schoolId', function(req,res,next){
+    Students.find({school:req.params.schoolId}).select('name points class -_id').sort('points').limit(10).exec(function(err, docs) { res.status(200).json(docs) });
+});
+router.get('/best/trophy/:schoolId', function(req,res,next){
+    Students.find({school:req.params.schoolId}).select('name trophy class -_id').sort('trophy').limit(10).exec(function(err, docs) { res.status(200).json(docs) });
+})
 module.exports=router;

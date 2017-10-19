@@ -82,5 +82,10 @@ router.get('/buildable/:id', function(req,res,next){
         }
         
     })
-})
+});
+router.get('/ranking/:field/:schoolId', function(req,res,next){
+    Student.find({school:req.params.schoolId}).sort(req.params.field).exec(function(err,result){
+        res.status(200).send(result);
+    });
+});
 module.exports=router;
