@@ -7,16 +7,16 @@ var Class=require('../models/class');
 var userCodes=require('../models/user_codes');
 var Students=require('../models/student');
 var randomstring=require('randomstring');
-router.get('/addPoints/:name/:schoolId', function(req,res,next){
-    Students.findOne({name:req.params.name,school:req.params.schoolId}, function(err,result){
+router.get('/addPoints/:name/:class/:schoolId', function(req,res,next){
+    Students.findOne({name:req.params.name,class:req.params.class,school:req.params.schoolId}, function(err,result){
         result.points=result.points + 1;
         result.save(function(err,result){
             res.status(200).send();
         })
     });
 });
-router.get('/minusPoints/:name/:schoolId', function(req,res,next){
-    Students.findOne({name:req.params.name,school:req.params.schoolId}, function(err,result){
+router.get('/minusPoints/:name/:class/:schoolId', function(req,res,next){
+    Students.findOne({name:req.params.name,class:req.params.class,school:req.params.schoolId}, function(err,result){
         result.points=result.points - 1;
         result.save(function(err,result){
             res.status(200).send();
