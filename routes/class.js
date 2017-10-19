@@ -87,8 +87,8 @@ router.get('/get/:className/:schoolId', function(req,res,next){
   });
 })
 router.get('/getAppended/:teacherName/:schoolId', function(req,res,next){
-    User.find({'name':req.params.teacherName, 'school':req.params.schoolId}, function(err,result){
-        res.json({'classes':result.classes});
+    User.findOne({'name':req.params.teacherName, 'school':req.params.schoolId}, function(err,result){
+        res.send(result.classes);
     })
 })
 function calculateDeltaCode(oldStudents, students, className, schoolId){
