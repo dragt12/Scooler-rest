@@ -60,7 +60,7 @@ router.get('/upgrade/:buildingName/:id', function(req,res,next){
         
     });
 })
-router.get('/buildable/:id', function(req,res,next){
+/*router.get('/buildable/:id', function(req,res,next){
     Student.findById(req.params.id, function(err,result){
         if(result){
             var returnArray=[];
@@ -82,10 +82,49 @@ router.get('/buildable/:id', function(req,res,next){
         }
         
     })
-});
+});*/
 router.get('/ranking/:field/:schoolId', function(req,res,next){
     Student.find({school:req.params.schoolId}).sort(req.params.field).exec(function(err,result){
         res.status(200).send(result);
     });
 });
+function isBuildable(director_level, building_level, building_cost, points){
+    if(points>=building_cost && building_level+1>=director_level){
+        return true;
+    } return false;
+}
+router.get('/data/:id', function(req,res,next){
+    Student.findById(req.params.id, function(err,result){
+        if(result){
+            var buildable=[];
+            var trophy=result.trophy;
+            var points=result.points;
+            var building_levels=result.buildings;
+            Object.keys(building_levels).forEach(function(element){
+                var cost=building_levels[element]*2+2;
+                if(element!='$init'){
+                    if(element!='director'){
+                        var isBuild=isBuildable(building_levels['director'], building_levels[element], cost, points)
+                        if(isBuild){
+                            buildable.push({[element]:cost});
+                        } else {
+                            buildable.push({[element]:-1});
+                        }
+                    } else {
+                        if(points>=cost){
+                            buildable.push({'director':cost});
+                        } else {
+                            buildable.push({'director':-1});
+                        }
+                    }
+                }
+                
+            },this)
+            var returnJSON={'trophy':trophy, 'points':points, 'buildings':buildable};
+            res.status(200).send(returnJSON);
+        } else {
+            res.status(600).send();
+        }
+    })
+})
 module.exports=router;
