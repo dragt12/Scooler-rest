@@ -21,4 +21,5 @@ router.get('/number/students', function(req,res,next){
     res.json({'number':result})
   })
 })
+router.post('/test',function(req,res,next){res.status(200).send();})
 module.exports = router;
