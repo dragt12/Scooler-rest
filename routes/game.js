@@ -109,6 +109,8 @@ router.get('/data/:id', function(req,res,next){
             var buildable=[];
             var trophy=result.trophy;
             var points=result.points;
+            var exp=result.xp;
+            var lvl=result.lvl;
             var building_levels=result.buildings;
             Object.keys(building_levels).forEach(function(element){
                 var cost=building_levels[element]*2+2;
@@ -130,7 +132,7 @@ router.get('/data/:id', function(req,res,next){
                 }
                 
             },this)
-            var returnJSON={'trophy':trophy, 'points':points, 'buildings':buildable};
+            var returnJSON={'trophy':trophy, 'points':points, 'buildings':buildable, 'exp':exp, 'lvl':lvl};
             res.status(200).send(returnJSON);
         } else {
             res.status(600).send();
