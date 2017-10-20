@@ -14,7 +14,9 @@ var student=new schema({
         teachers_room:{type:Number, default:1},
         class:{type:Number, default:1}
     },
-    trophy:{type:Number, default:0}
+    trophy:{type:Number, default:0},
+    xp:{type:Number, default:0},
+    lvl:{type:Number, default:1}
 });
 student.methods.encryptPassword = function(password)
 {

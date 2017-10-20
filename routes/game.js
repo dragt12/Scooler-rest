@@ -26,7 +26,7 @@ scheduler.scheduleJob('0 * * * * *', function(){
             trophys+=trophys*happiness*20/100;
             trophys+=trophys*teachers*10/100;
             
-            element.trophy+=trophys;
+            element.trophy+=Math.round(trophys);
             element.save(function(err){});
         })
         console.log(result);
@@ -48,6 +48,11 @@ router.get('/upgrade/:buildingName/:id', function(req,res,next){
                     if(result.points>=neededPoints && result.buildings[element]+1<=result.buildings['director']){
                         result.buildings[element]++;
                         result.points-=neededPoints;
+                        result.xp+=neededPoints;
+                        while(result.xp>=result.lvl*10){
+                            result.lvl++;
+                            result.xp-=result.lvl*10;
+                        }
                         result.save(function(err){
                             res.status(200).send();
                         })
@@ -87,6 +92,11 @@ router.get('/ranking/:field/:schoolId', function(req,res,next){
     Student.find({school:req.params.schoolId}).sort(req.params.field).exec(function(err,result){
         res.status(200).send(result);
     });
+});
+router.get('/ranking/:field/:className/:schoolId', function(req,res,next){
+    Student.find({school:req.params.schoolId, class:req.params.className}).sort(req.params.field).exec(function(err,result){
+        res.status(200).send(result);
+    })
 });
 function isBuildable(director_level, building_level, building_cost, points){
     if(points>=building_cost && building_level+1>=director_level){
