@@ -118,15 +118,15 @@ router.get('/data/:id', function(req,res,next){
                     if(element!='director'){
                         var isBuild=isBuildable(building_levels['director'], building_levels[element], cost, points)
                         if(isBuild){
-                            buildable.push({[element]:cost});
+                            buildable.push({[element]:cost, 'buildable':true});
                         } else {
-                            buildable.push({[element]:-1});
+                            buildable.push({[element]:cost, 'buildable':false});
                         }
                     } else {
                         if(points>=cost){
-                            buildable.push({'director':cost});
+                            buildable.push({'director':cost, "buildable":true});
                         } else {
-                            buildable.push({'director':-1});
+                            buildable.push({'director':cost, "buildable":false});
                         }
                     }
                 }
