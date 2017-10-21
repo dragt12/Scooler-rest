@@ -106,7 +106,8 @@ router.get('/ranking/:field/:className/:schoolId', function(req,res,next){
     })
 });
 function isBuildable(director_level, building_level, building_cost, points){
-    if(points>=building_cost && building_level+1>=director_level){
+    if(points>=building_cost && building_level+1<=director_level){
+        console.log(director_level, building_level, building_cost, points)
         return true;
     } return false;
 }
