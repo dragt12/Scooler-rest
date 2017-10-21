@@ -35,9 +35,24 @@ scheduler.scheduleJob('0 * * * * *', function(){
 })
 router.get('/upgrade/:buildingName/:id', function(req,res,next){
     Student.findById(req.params.id, function(err,result){
-        if(req.params.buildingName=='director'){
+        //var neededPoints=result.buildings[req.params.buildingName]*2+2;
+        var x = result.buildings[req.params.buildingName];
+        if(/*neededPoints<result.points && */x<result.buildings['director'])
+        {
+            result.buildings[req.params.buildingName]++;
+            //result.points-=neededPoints;
+            //result.xp+=neededPoints;
+            while(result.xp>=result.lvl*10){
+                result.lvl++;
+                result.xp-=result.lvl*10;
+            }
+            result.save(function(err){
+                res.status(200).send();
+            })
+        }
+        /*if(req.params.buildingName=='director'){
             var neededPoints=result.buildings['director']*2+2;
-            result.buildings['director']++;
+            result.buildings['director']=result.buildings['director']+1;
             result.points-=neededPoints;
             result.xp+=neededPoints;
             while(result.xp>=result.lvl*10){
@@ -47,13 +62,13 @@ router.get('/upgrade/:buildingName/:id', function(req,res,next){
             result.save(function(err){
                 res.status(200).send();
             })
-        } else {
+        } *//*else {
             Object.keys(result.buildings).forEach(function(element){
                 if(element==req.params.buildingName){
                     var neededPoints=result.buildings[element]*2+2;
                     console.log(neededPoints);
                     if(result.points>=neededPoints && result.buildings[element]+1<=result.buildings['director']){
-                        result.buildings[element]++;
+                        result.buildings[element]=result.buildings;
                         result.points-=neededPoints;
                         result.xp+=neededPoints;
                         while(result.xp>=result.lvl*10){
@@ -68,8 +83,7 @@ router.get('/upgrade/:buildingName/:id', function(req,res,next){
                     }
                 }
             });
-        }
-        
+        }*/
     });
 })
 /*router.get('/buildable/:id', function(req,res,next){
@@ -126,15 +140,15 @@ router.get('/data/:id', function(req,res,next){
                     if(element!='director'){
                         var isBuild=isBuildable(building_levels['director'], building_levels[element], cost, points)
                         if(isBuild){
-                            buildable.push({[element]:cost, 'buildable':true});
+                            buildable.push({[element]:buildings_levels[element], 'buildable':true});
                         } else {
-                            buildable.push({[element]:cost, 'buildable':false});
+                            buildable.push({[element]:buildings_levels[element], 'buildable':false});
                         }
                     } else {
                         if(points>=cost){
-                            buildable.push({'director':cost, "buildable":true});
+                            buildable.push({'director':buildings_levels['director'], "buildable":true});
                         } else {
-                            buildable.push({'director':cost, "buildable":false});
+                            buildable.push({'director':buildings_levels['director'], "buildable":false});
                         }
                     }
                 }
