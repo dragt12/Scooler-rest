@@ -43,7 +43,7 @@ router.get('/upgrade/:buildingName/:id', function(req,res,next){
         } else {
             Object.keys(result.buildings).forEach(function(element){
                 if(element==req.params.buildingName){
-                    var neededPoints=result.buildings[element]*10+20;
+                    var neededPoints=result.buildings[element]*2+2;
                     console.log(neededPoints);
                     if(result.points>=neededPoints && result.buildings[element]+1<=result.buildings['director']){
                         result.buildings[element]++;
