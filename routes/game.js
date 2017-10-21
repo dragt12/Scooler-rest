@@ -36,7 +36,14 @@ scheduler.scheduleJob('0 * * * * *', function(){
 router.get('/upgrade/:buildingName/:id', function(req,res,next){
     Student.findById(req.params.id, function(err,result){
         if(req.params.buildingName=='director'){
+            var neededPoints=result.buildings['director']*2+2;
             result.buildings['director']++;
+            result.points-=neededPoints;
+            result.xp+=neededPoints;
+            while(result.xp>=result.lvl*10){
+                result.lvl++;
+                result.xp-=result.lvl*10;
+            }
             result.save(function(err){
                 res.status(200).send();
             })
