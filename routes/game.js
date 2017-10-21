@@ -37,7 +37,7 @@ router.get('/upgrade/:buildingName/:id', function(req,res,next){
     Student.findById(req.params.id, function(err,result){
         //var neededPoints=result.buildings[req.params.buildingName]*2+2;
         var x = result.buildings[req.params.buildingName];
-        if(/*neededPoints<result.points && */x<result.buildings['director'])
+        if(/*neededPoints<result.points && */x+1<=result.buildings['director'])
         {
             result.buildings[req.params.buildingName]++;
             //result.points-=neededPoints;
