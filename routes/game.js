@@ -178,7 +178,7 @@ router.get('/mobile/data/:id', function(req,res,next){
                         if(isBuild){
                             buildable.push({'building':element, 'cost':building_levels[element], 'buildable':true});
                         } else {
-                            buildable.push({'building':[element], 'cost':building_levels[element], 'buildable':false});
+                            buildable.push({'building':element, 'cost':building_levels[element], 'buildable':false});
                         }
                     } else {
                         if(points>=cost){
