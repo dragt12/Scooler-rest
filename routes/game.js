@@ -161,4 +161,40 @@ router.get('/data/:id', function(req,res,next){
         }
     })
 })
+router.get('/mobile/data/:id', function(req,res,next){
+    Student.findById(req.params.id, function(err,result){
+        if(result){
+            var buildable=[];
+            var trophy=result.trophy;
+            var points=result.points;
+            var exp=result.xp;
+            var lvl=result.lvl;
+            var building_levels=result.buildings;
+            Object.keys(building_levels).forEach(function(element){
+                var cost=building_levels[element]*2+2;
+                if(element!='$init'){
+                    if(element!='director'){
+                        var isBuild=isBuildable(building_levels['director'], building_levels[element], cost, points)
+                        if(isBuild){
+                            buildable.push({'building':element, 'cost':building_levels[element], 'buildable':true});
+                        } else {
+                            buildable.push({'building':[element], 'cost':building_levels[element], 'buildable':false});
+                        }
+                    } else {
+                        if(points>=cost){
+                            buildable.push({'building':'director', 'cost':building_levels['director'], "buildable":true});
+                        } else {
+                            buildable.push({'building':'director', 'cost':building_levels['director'], "buildable":false});
+                        }
+                    }
+                }
+                
+            },this)
+            var returnJSON={'trophy':trophy, 'points':points, 'buildings':buildable, 'exp':exp, 'lvl':lvl};
+            res.status(200).send(returnJSON);
+        } else {
+            res.status(600).send();
+        }
+    })
+})
 module.exports=router;
