@@ -43,8 +43,8 @@ router.get('/upgrade/:buildingName/:id', function(req,res,next){
             result.points-=neededPoints;
             result.xp+=neededPoints;
             while(result.xp>=result.lvl*10){
-                result.lvl++;
                 result.xp-=result.lvl*10;
+                result.lvl++;
             }
             result.save(function(err){
                 res.status(200).send();
