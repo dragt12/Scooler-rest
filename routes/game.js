@@ -8,7 +8,7 @@ var userCodes=require('../models/user_codes');
 var Student=require('../models/student');
 var randomstring=require('randomstring');
 var scheduler=require('node-schedule');
-scheduler.scheduleJob('0 * * * * *', function(){
+scheduler.scheduleJob('* * 0 * * *', function(){
     Student.find({}, function(err, result){
         result.forEach(function(element){
             var students=element.buildings['class']*10+20;
