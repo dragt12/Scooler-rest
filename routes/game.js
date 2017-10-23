@@ -50,7 +50,7 @@ router.get('/upgrade/:buildingName/:id', function(req,res,next){
                 res.status(200).send();
             })
         }
-        /*if(req.params.buildingName=='director'){
+        if(req.params.buildingName=='director'){
             var neededPoints=result.buildings['director']*2+2;
             result.buildings['director']=result.buildings['director']+1;
             result.points-=neededPoints;
@@ -62,7 +62,7 @@ router.get('/upgrade/:buildingName/:id', function(req,res,next){
             result.save(function(err){
                 res.status(200).send();
             })
-        } *//*else {
+        }/*else {
             Object.keys(result.buildings).forEach(function(element){
                 if(element==req.params.buildingName){
                     var neededPoints=result.buildings[element]*2+2;
