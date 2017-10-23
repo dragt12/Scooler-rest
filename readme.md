@@ -116,10 +116,13 @@ Zwraca json w postaci
 }
 ``` 
 W parametrze buildings w kazdym jsonie klucz to nazwa budynku a wartosc to -1 gdy nie mozemy zbudowac budynku lub koszt budowy gdy mozemy go zbudowac.  
-#### '/game/ranking/:field/:schoolId':  
-Wymagane parametry: ':field' - pole po którym sortujesz, ':schoolId' - klucz szkoły.  
-Zwraca json w postaci jsona ucznia posortowany malejąco po danym parametrze.  
-LOGIKA GRY:  
+#### '/game/ranking/:field/:schoolId':
+Potrzebne argumenty: ':field' - pole do posortowania, ':schoolId' - klucz szkoly.
+Zwraca json uczniów danej szkoły posortowany malejąco po parametrze ':field'.  
+#### '/game/ranking/:field/:className/:schoolId':  
+Potrzebne argumenty: ':field' - pole do posortowania, ':className' - nazwa klasy, ':schoolId' - klucz szkoly.  
+Zwraca json uczniów danej klasy w danej szkole posortowany malejąco po parametrze ':field'.  
+### LOGIKA GRY:  
 Potrzebne pkt: ```lvl_budynku*2+2```   
 Trofea naliczane są codziennie o północy.  
 Liczba trofeów jest zależna od liczby uczniów, oraz poziomu rozbudowy stołówki oraz pokoju nauczycieli w stosunku do poziomu rozbudowy klasy.  
