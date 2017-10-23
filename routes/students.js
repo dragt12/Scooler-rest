@@ -33,5 +33,8 @@ router.get('/best/points/:schoolId', function(req,res,next){
 });
 router.get('/best/trophy/:schoolId', function(req,res,next){
     Students.find({school:req.params.schoolId}).select('name trophy class -_id').sort('trophy').limit(10).exec(function(err, docs) { res.status(200).json(docs) });
+});
+router.get('/best/trophy/:class/:schoolId', function(req,res,next){
+    Students.find({school:req.params.schoolId, class:req.params.class}).select('name trophy -_id').sort('trophy').limit(10).exec(function(err, docs) { res.status(200).json(docs) });
 })
 module.exports=router;
