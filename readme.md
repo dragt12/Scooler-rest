@@ -14,7 +14,7 @@ Generuje kod szkoły i hasło szkoły. Zwraca json o postaci:
 }
 ```  
 #### 'school/teacher_generate/:school_key/:teachers':  
-Wymagane parametry: ':school_key' - klucz szkoły, 'teachers' - array z imionami i nazwiskami nauczycieli np. ["Marcin Michno", "Arek Słowik"].  
+Wymagane parametry: ':school_key' - klucz szkoły, 'teachers' - array z imionami i nazwiskami nauczycieli np. ["teacher1", "teacher2"].  
 Zwraca array jsonów o podanym wyglądzie: 
 ```
 {
